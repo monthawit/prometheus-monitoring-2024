@@ -11,6 +11,9 @@ htpasswd -nBC 12 "" | tr -d ':\n'
 add your password and save encoded for create node_exporter config.yaml
 
 # Create TLS Cert For Secure Exporter
+
+*****  ในกรณีที่ไม่ใช่การ Implement ใหม่ หรือมี Cert สำหรับ Node exporter อยู่แล้ว ให้เอามาใช้เลย และข้ามขั้นตอนนี้ไป *****
+
 * Create Directory for keep Cert and node exporter config.yaml
 ```bash
 mkdir /etc/node_exporter
@@ -23,10 +26,16 @@ to next step create ca and tls cert
 ## Create CA
 ### Create CA Key
 ```bash
-
+openssl genrsa -out ca.key 2048
 ```
-
-
+### Create CA Certificate-Signing-Request (CSR)
+```bash
+openssl req -new -key ca.key -out ca.csr
+```
+### Create CA Certificate from CA CSR, CA KEY  10 Years
+```bash
+openssl x509 -req -days 3650 -in ca.csr -signkey ca.key -out ca.crt
+```
 
 # Install node_exporter On VM Linux
 
