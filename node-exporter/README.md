@@ -36,6 +36,19 @@ openssl req -new -key ca.key -out ca.csr
 ```bash
 openssl x509 -req -days 3650 -in ca.csr -signkey ca.key -out ca.crt
 ```
+## Create TLS Cert
+### Create TLS Key
+```bash
+openssl genrsa -out tls.key 2048
+```
+### Create TLS CSR
+```bash
+openssl req -new -key tls.key -out tls.csr
+```
+### Create TLS Cert From CA  10 Years
+```bash
+openssl x509 -req -in tls.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out tls.crt -days 3650
+```
 
 # Install node_exporter On VM Linux
 
