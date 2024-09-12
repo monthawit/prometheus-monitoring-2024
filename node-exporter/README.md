@@ -15,6 +15,11 @@ add your password and save encoded for create node_exporter config.yaml
 ```bash
 mkdir /etc/node_exporter
 ```
+Move into node_exporter dir
+```bash
+cd node_exporter
+```
+to next step create ca and tls cert
 ## Create CA
 ### Create CA Key
 ```bash
