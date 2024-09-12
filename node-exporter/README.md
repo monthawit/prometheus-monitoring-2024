@@ -8,7 +8,7 @@ sudo apt-get update && sudo apt install apache2-utils -y
 ```bash
 htpasswd -nBC 12 "" | tr -d ':\n'
 ```
-
+add your password and save encoded for create node_exporter config.yaml
 
 # Install node_exporter On VM Linux
 
