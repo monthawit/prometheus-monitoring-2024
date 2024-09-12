@@ -144,3 +144,8 @@ kubectl apply -f 02-node-exporter-tls-secret.yaml
 ```bash
 kubectl apply -f 03-node-exporter-hostlist-configmap.yaml
 ```
+### Edit Prometheus Server
+```bash
+vi /home/user01/kube-prometheus/manifests/
+```
+edit volume and volumemount for config configmap in deployment
