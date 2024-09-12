@@ -51,3 +51,6 @@ sudo systemctl daemon-reload
 sudo systemctl enable node_exporter
 sudo systemctl restart node_exporter
 ```
+### Step 7 : Test Access Node Exporter
+
+use   IP:9100  on Web Browser and Check
