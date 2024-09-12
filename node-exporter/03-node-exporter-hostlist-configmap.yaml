@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: node-exporter-ols-hostlist-01
+  namespace: monitoring
+data:
+  targets.yml: |
+    - targets:
+      - 10.150.0.79:9100        # target ip : exporter port  xxxxx:9100
+      labels:
+        vmname: ols-undyingk8s-nfs-01    # vmname must have, it's use to relabeling to instance label
+        ipv4public: none
+        ipv4private: 10.150.0.79          
+        hostname: ols-undyingk8s-nfs-01 
+        acidomain: domain3
+        infra: proxmox-ols-container-lab
+        servicelevel: prd
+        servicename: vmaas          
+        customer: container-team   
+    - targets:
+      - 10.150.0.199:9100
+      labels:
+        vmname: ols-cp1k8s-nfs-01
+        ipv4public: none
+        ipv4private: 10.150.0.199
+        hostname: ols-cp1k8s-nfs-01
+        acidomain: domain3
+        infra: proxmox-ols-container-lab
+        servicelevel: prd
+        servicename: vmaas
+        customer: container-team
