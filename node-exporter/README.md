@@ -10,7 +10,7 @@ sudo useradd -rs /bin/false node_exporter
 ```
 ### Step 2: Log into node_exporter user and download the latest node_exporter package.
 
-Version ล่าสุด ณ วันที่ 11/09/2024
+คำสั่งด้านล่างนี้เป็น Version ล่าสุด ณ วันที่ 11/09/2024
 
 ```bash
 wget https://github.com/prometheus/node_exporter/releases/download/v1.8.2/node_exporter-1.8.2.linux-amd64.tar.gz
@@ -44,4 +44,10 @@ Restart=always
 [Install]
 WantedBy=multi-user.target
 ```
+### Step 6: Reload and Restart service node_exporter
 
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable node_exporter
+sudo systemctl restart node_exporter
+```
