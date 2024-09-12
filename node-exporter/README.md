@@ -20,7 +20,7 @@ mkdir /etc/node_exporter
 ```
 Move into node_exporter dir
 ```bash
-cd node_exporter
+cd /etc/node_exporter
 ```
 to next step create ca and tls cert
 ## Create CA
@@ -48,6 +48,26 @@ openssl req -new -key tls.key -out tls.csr
 ### Create TLS Cert From CA  10 Years
 ```bash
 openssl x509 -req -in tls.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out tls.crt -days 3650
+```
+# Create node_exporter config.yaml
+
+### move to node_exporter dir 
+```bash
+cd /etc/node_exporter
+```
+### Create file
+```bash
+vi /etc/node_exporter/config.yml
+```
+add code 
+```yaml
+basic_auth_users:
+  add-your-username: Password Gen From htpasswd
+tls_server_config:
+  cert_file: /etc/node_exporter/tls.crt
+  key_file: /etc/node_exporter/tls.key
+  #client_auth_type: RequireAndVerifyClientCert
+  #client_ca_file: /etc/node_exporter/ca.crt
 ```
 
 # Install node_exporter On VM Linux
