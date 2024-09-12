@@ -4,6 +4,10 @@
 sudo apt-get update && sudo apt install apache2-utils -y
 ```
 
+### Gen Password 
+```bash
+htpasswd -nBC 12 "" | tr -d ':\n'
+```
 
 
 # Install node_exporter On VM Linux
