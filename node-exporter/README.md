@@ -11,7 +11,15 @@ htpasswd -nBC 12 "" | tr -d ':\n'
 add your password and save encoded for create node_exporter config.yaml
 
 # Create TLS Cert For Secure Exporter
+* Create Directory for keep Cert and node exporter config.yaml
+```bash
+mkdir /etc/node_exporter
+```
+## Create CA
+### Create CA Key
+```bash
 
+```
 
 
 
