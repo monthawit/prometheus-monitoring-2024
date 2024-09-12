@@ -26,3 +26,18 @@ Allow port 9100 if you use firewall on OS
 
 vi /etc/systemd/system/node_exporter.service 
 
+
+```bash
+[Unit]
+Description=Node Exporter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+ExecStart=/usr/local/bin/node_exporter --web.config.file="/etc/node_exporter/config.yml"
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+```
+
