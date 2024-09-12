@@ -131,11 +131,17 @@ use   IP:9100  on Web Browser and Check
 # Config Prometheus and ScrapeConfig on Kubernetes
 
 ### Create Basic Auth secret 
+
+* use data basic auth from above
+
 ```bash
 kubectl apply -f 01-node-exporter-basic-auth-secret.yaml
 ```
 
 ### Create tls secret
+
+* use data tls from above
+
 ```bash
 kubectl apply -f 02-node-exporter-tls-secret.yaml
 ```
@@ -239,4 +245,8 @@ spec:
       "X-Scope-OrgID": undyingk8s
 ```
 
-###
+### Create ScrapeConfig for create Scrape data from node exporter 
+
+```bash
+kubectl apply -f 04-node-exporter-scrapeconfig.yaml
+```
