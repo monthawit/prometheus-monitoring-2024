@@ -146,6 +146,97 @@ kubectl apply -f 03-node-exporter-hostlist-configmap.yaml
 ```
 ### Edit Prometheus Server
 ```bash
-vi /home/user01/kube-prometheus/manifests/
+vi /home/user01/kube-prometheus/manifests/prometheus-prometheus.yaml
 ```
 edit volume and volumemount for config configmap in deployment
+
+```yaml
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  labels:
+    app.kubernetes.io/component: prometheus
+    app.kubernetes.io/instance: k8s
+    app.kubernetes.io/name: prometheus
+    app.kubernetes.io/part-of: kube-prometheus
+    app.kubernetes.io/version: 2.53.0
+  name: k8s
+  namespace: monitoring
+spec:
+  storage:
+    volumeClaimTemplate:
+      spec:
+        storageClassName: nfs-storageclass 
+        resources:
+          requests:
+            storage: 100Gi
+  alerting:
+    alertmanagers:
+    - apiVersion: v2
+      name: alertmanager-main
+      namespace: monitoring
+      port: web
+  enableFeatures: []
+  externalLabels: {}
+  image: quay.io/prometheus/prometheus:v2.53.0
+  volumeMounts:
+    - name: ols-ping-01
+      mountPath: /etc/prometheus/targets/ols-ping-01
+    - name: ols-snmp-01
+      mountPath: /etc/prometheus/targets/ols-snmp-01    
+    - name: ols-node-exporter-hostlist-01
+      mountPath: /etc/prometheus/targets/ols-node-expoter-01    ##### node-exporter-hostlist-configmap
+  volumes:
+    - name: ols-node-exporter-hostlist-01    ##### node-exporter-hostlist-configmap
+      configMap:
+        name: node-exporter-ols-hostlist-01
+    - name: ols-ping-01
+      configMap:
+        name: bbex-ols-ping-01-hostlist    
+    - name: ols-snmp-01
+      configMap:
+        name: snmp-targets-config      
+  nodeSelector:
+    kubernetes.io/os: linux
+  podMetadata:
+    labels:
+      app.kubernetes.io/component: prometheus
+      app.kubernetes.io/instance: k8s
+      app.kubernetes.io/name: prometheus
+      app.kubernetes.io/part-of: kube-prometheus
+      app.kubernetes.io/version: 2.53.0
+  podMonitorNamespaceSelector: {}
+  podMonitorSelector: {}
+  probeNamespaceSelector: {}
+  probeSelector: {}
+  replicas: 2
+  resources:
+    requests:
+      memory: 400Mi
+  ruleNamespaceSelector: {}
+  ruleSelector: {}
+  scrapeConfigNamespaceSelector: {}
+  scrapeConfigSelector: {}
+  securityContext:
+    fsGroup: 2000
+    runAsNonRoot: true
+    runAsUser: 1000
+  serviceAccountName: prometheus-k8s
+  serviceMonitorNamespaceSelector: {}
+  serviceMonitorSelector: {}
+  version: 2.53.0
+  remoteWrite:
+  - url: http://mimir-ingress.undyingk8s.olsdemo.com/api/v1/push
+    name: undyingk8s
+    basicAuth:
+      username:
+        name: kubepromsecret
+        key: username
+      password:
+        name: kubepromsecret
+        key: password
+    headers:
+      "X-Scope-OrgID": undyingk8s
+```
+
+###
