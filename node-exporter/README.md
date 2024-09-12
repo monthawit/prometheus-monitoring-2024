@@ -129,3 +129,18 @@ use   IP:9100  on Web Browser and Check
 
 
 # Config Prometheus and ScrapeConfig on Kubernetes
+
+### Create Basic Auth secret 
+```bash
+kubectl apply -f 01-node-exporter-basic-auth-secret.yaml
+```
+
+### Create tls secret
+```bash
+kubectl apply -f 02-node-exporter-tls-secret.yaml
+```
+
+### Create hostlist Configmap 
+```bash
+kubectl apply -f 03-node-exporter-hostlist-configmap.yaml
+```
