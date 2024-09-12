@@ -10,6 +10,11 @@ htpasswd -nBC 12 "" | tr -d ':\n'
 ```
 add your password and save encoded for create node_exporter config.yaml
 
+# Create TLS Cert For Secure Exporter
+
+
+
+
 # Install node_exporter On VM Linux
 
 Ref : https://medium.com/@abdullah.eid.2604/node-exporter-installation-on-linux-ubuntu-8203d033f69c 
