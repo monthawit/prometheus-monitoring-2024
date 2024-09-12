@@ -1,0 +1,42 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: ScrapeConfig
+metadata:
+  name: node-exporter-vm-scrapeconfig-01
+  namespace: monitoring   
+  labels:
+    release: prometheus
+spec:
+  #jobName: 'ols_node_exporter'
+  fileSDConfigs:
+    - files:
+      - '/etc/prometheus/targets/ols-node-expoter-01/targets.yml'    
+      # add file 03-nodeexporter-hostlist-configmap.yaml in to path in prometheus container, you can config in prometheus-prometheus.yaml in prometheus operator
+  scheme: HTTPS 
+  metricsPath: /metrics
+  basicAuth:
+    username:
+      name: node-exporter-basic-auth-secret
+      key: username
+    password:
+      name: node-exporter-basic-auth-secret
+      key: password   
+  tlsConfig:  
+    insecureSkipVerify: true  # หากต้องการยอมรับ cert ที่ไม่ตรง ให้ตั้งเป็น true
+    ca:
+      secret:
+        name: node-exporter-tls-secret
+        key: ca.crt
+    cert:
+      secret:
+        name: node-exporter-tls-secret
+        key: tls.crt
+    keySecret:
+      name: node-exporter-tls-secret
+      key: tls.key      
+  relabelings:
+    - sourceLabels: [__address__]
+      targetLabel: instance
+      regex: (.*) 
+    - sourceLabels: [vmname]
+      targetLabel: instance
+      regex: (.*)
