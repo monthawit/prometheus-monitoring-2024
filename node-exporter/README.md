@@ -1,5 +1,10 @@
 # Create Basic Auth Password 
 ### install htpasswd
+```bash
+sudo apt-get update && sudo apt install apache2-utils -y
+```
+
+
 
 # Install node_exporter On VM Linux
 
